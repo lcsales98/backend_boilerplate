@@ -15,6 +15,7 @@ Router.route("/api/users/signin").post(UserAuthController.signIn);
 Router.route("/api/user/me")
     .all(authMiddleware)
     .get(UserAuthController.me);
+
 Router.route("/api/users")
     .post(UserController.create)
     .all(authMiddleware)

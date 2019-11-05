@@ -59,25 +59,25 @@ class UserAuth {
     ): Promise<Response | undefined | void> {
         try {
             if (!req.user) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     400,
                     "this user not exists",
                     "user/not-exists"
                 );
             }
-            return await responses.sendSuccess(res, req.user);
+            return responses.sendSuccess(res, req.user);
         } catch (error) {
             console.log(error);
             if (error.status) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     error.status,
                     "internal server error",
                     "internal-server-error"
                 );
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",

@@ -15,19 +15,19 @@ class UserController {
             const finded_users = await User.find({});
 
             if (finded_users.length > 0) {
-                return await responses.sendSuccess(res, finded_users);
+                return responses.sendSuccess(res, finded_users);
             }
         } catch (error) {
             console.log(error);
             if (error.status) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     error.status,
                     "internal server error",
                     "internal-server-error"
                 );
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",
@@ -55,7 +55,7 @@ class UserController {
             const exist_user = await User.findOne({ email: user.email });
 
             if (exist_user) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     400,
                     "this e-mail already registered",
@@ -68,14 +68,14 @@ class UserController {
         } catch (error) {
             console.log(error);
             if (error.status) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     error.status,
                     "internal server error",
                     "internal-server-error"
                 );
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",
@@ -92,7 +92,7 @@ class UserController {
         try {
             const user = await User.findById({ _id: req.params.userId });
             if (!user) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     400,
                     "this user not exists",
@@ -103,14 +103,14 @@ class UserController {
         } catch (error) {
             console.log(error);
             if (error.status) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     error.status,
                     "internal server error",
                     "internal-server-error"
                 );
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",
@@ -125,7 +125,7 @@ class UserController {
         res: Response
     ): Promise<Response | undefined | void> {
         if (req.user === undefined) {
-            return await responses.sendError(
+            return responses.sendError(
                 res,
                 400,
                 "this user not exists",
@@ -159,7 +159,7 @@ class UserController {
 
             console.log(updated_user);
             if (updated_user === null) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",
@@ -173,18 +173,18 @@ class UserController {
                 (err, res) => res
             );
 
-            return await responses.sendSuccess(res, updated_doc);
+            return responses.sendSuccess(res, updated_doc);
         } catch (error) {
             console.log(error);
             if (error.status) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     error.status,
                     "internal server error",
                     "internal-server-error"
                 );
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",
@@ -200,7 +200,7 @@ class UserController {
     ): Promise<Response | undefined | void> {
         if (req.user !== undefined) {
             if (req.user.deleted) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     400,
                     "this user has been deleted",
@@ -217,18 +217,18 @@ class UserController {
                     (err, res) => res
                 );
 
-                return await responses.sendSuccess(res, deleted_doc);
+                return responses.sendSuccess(res, deleted_doc);
             } catch (error) {
                 console.log(error);
                 if (error.status) {
-                    return await responses.sendError(
+                    return responses.sendError(
                         res,
                         error.status,
                         "internal server error",
                         "internal-server-error"
                     );
                 } else {
-                    return await responses.sendError(
+                    return responses.sendError(
                         res,
                         500,
                         "internal server error",
@@ -238,6 +238,8 @@ class UserController {
             }
         }
     }
+
+
 
     async middlewareIncludeUserInRequest(
         req: RequestWithUser,
@@ -251,7 +253,7 @@ class UserController {
             if (finded_doc) {
                 req.user = finded_doc;
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     400,
                     "this user not exists",
@@ -262,14 +264,14 @@ class UserController {
         } catch (error) {
             console.log(error);
             if (error.status) {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     error.status,
                     "internal server error",
                     "internal-server-error"
                 );
             } else {
-                return await responses.sendError(
+                return responses.sendError(
                     res,
                     500,
                     "internal server error",
